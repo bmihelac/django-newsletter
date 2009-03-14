@@ -3,6 +3,17 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 import datetime
 
+
+class NewsletterGroup(models.Model):
+    '''
+    Newsletter groups.
+    '''
+    name = models.CharField(verbose_name=_('name'), max_length=250)
+    
+    def __unicode__(self):
+        return u'%s' % (self.name)    
+    
+
 class SubscriptionBase(models.Model):
     '''
     A newsletter subscription base.
@@ -11,8 +22,10 @@ class SubscriptionBase(models.Model):
 
     subscribed = models.BooleanField(_('subscribed'), default=True)
     email = models.EmailField(_('email'), unique=True)
+    name = models.CharField(verbose_name=_('name'), max_length=250, blank = True, null = True)
     created_on = models.DateField(_("created on"), blank=True)
     updated_on = models.DateField(_("updated on"), blank=True)
+    newsletter_groups = models.ManyToManyField(NewsletterGroup, blank = True, null = True)
     
     class Meta:
         abstract = True
@@ -38,6 +51,7 @@ class SubscriptionBase(models.Model):
             self.created_on = datetime.date.today()
         super(SubscriptionBase,self).save()
 
+
 class Subscription(SubscriptionBase):
     '''
     Generic subscription
@@ -49,3 +63,6 @@ class Subscription(SubscriptionBase):
         
     def save(self, *args, **kwargs):
         super(Subscription,self).save()
+
+
+

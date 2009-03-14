@@ -35,8 +35,8 @@ def subscribe_detail(request, form_class=SubscriptionForm,
         model_str="newsletter.subscription"):
 
     if request.POST:   
+        model = get_model(*model_str.split('.')) 
         try:
-            model = get_model(*model_str.split('.')) 
             instance = model._default_manager.get(email=request.POST['email'])
         except model.DoesNotExist: 
             instance = None

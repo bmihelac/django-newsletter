@@ -1,7 +1,23 @@
+r"""
+>>> from newsletter.models import *
+>>> subscription = Subscription(email="testemail@example.com")
+>>> subscription.save()
+>>> subscription.newsletter_groups.all()
+[]
+
+# Create Newsletter Group
+>>> ng = NewsletterGroup(name = "media")
+>>> ng.save()
+>>> subscription.newsletter_groups.add(ng)
+>>> subscription.newsletter_groups.all()
+[<NewsletterGroup: media>]
+"""
+
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-class ShopTest(TestCase):
+
+class ClientTest(TestCase):
 
     def setUp(self):
         pass
@@ -14,3 +30,5 @@ class ShopTest(TestCase):
         for i in range(2):
             response = self.client.post(reverse('subscribe_detail'), post_data)
             self.assertTemplateUsed(response, "newsletter/success.html")
+
+        

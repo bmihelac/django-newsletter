@@ -2,3 +2,5 @@
 *.bak
 *.db
 local_settings.py
+.DS_Store
+todo.txt

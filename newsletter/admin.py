@@ -1,11 +1,16 @@
 from django.contrib import admin
-from newsletter.models import Subscription
-from newsletter.forms import SubscriptionForm
+from models import Subscription, NewsletterGroup
 
 class SubscriptionAdmin(admin.ModelAdmin):
     
-    list_display = ('email', 'subscribed', 'created_on', )
+    list_display = ('email', 'name', 'subscribed', 'created_on', )
     search_fields = ('email',)
-    list_filter = ('subscribed',)
+    list_filter = ('newsletter_groups', 'created_on', 'subscribed', )
+    
+    
+class NewsletterGroupAdmin(admin.ModelAdmin):
+    pass
+        
     
 admin.site.register(Subscription, SubscriptionAdmin)
+admin.site.register(NewsletterGroup, NewsletterGroupAdmin)
